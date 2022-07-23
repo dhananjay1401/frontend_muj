@@ -1,30 +1,34 @@
 import React, { useState } from "react";
-import {
-  Typography,
-  TextField,
-  Stepper,
-  Step,
-  StepLabel,
-} from "@material-ui/core";
+import Stepper from "@mui/material/Stepper";
+import { Typography, TextField, Step, StepLabel } from "@mui/material";
 import { Button } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { orange, purple } from "@mui/material/colors";
+import Box from "@mui/material/Box";
 
 
-const theme = createTheme({
-  components: {
-    MuiStepIcon: {
-      styleOverrides: {
-        root: {
-          color: "red",
-        },
-      },
+
+
+const the = createTheme({
+  palette: {
+    primary: {
+      main: "#f4511e",
+    },
+    secondary: {
+      main: "#f44336",
     },
   },
 });
 const useStyles = makeStyles((theme) => ({
   button: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(45),
+    primary: {
+      main: "#f4511e",
+    },
+    secondary: {
+      main: "#f44336",
+    },
   },
   multilineColor: {
     color: "red",
@@ -40,46 +44,58 @@ function getSteps() {
 }
 
 function getStepContent(step) {
+
+ 
+
+
   switch (step) {
     case 0:
       return (
         <>
-          <TextField
-            
-            id="first-name"
-            label="First Name"
-            variant="outlined"
-            placeholder="Enter Your First Name"
-            fullWidth
-            margin="normal"
-            name="firstName"
-            
-          
-
-                    />
-          <TextField
-            id="last-name"
-            label="Last Name"
-            variant="outlined"
-            placeholder="Enter Your Last Name"
-            fullWidth
-            margin="normal"
-            name="lastName"
-          />
-          <TextField
-            id="nick-name"
-            label="Nick Name"
-            variant="outlined"
-            placeholder="Enter Your Nick Name"
-            fullWidth
-            margin="normal"
-            name="nickName"
-          />
+          <Typography variant="h6" align="Center">
+            Getting Started
+          </Typography>
+          <br />
+          {/* <ThemeProvider theme={the}> */}
+            <TextField
+              id="first-name"
+              label="First Name"
+              variant="outlined"
+              placeholder="Enter Your First Name"
+              fullWidth
+              margin="normal"
+              name="firstName"
+              
+            />
+            <TextField
+              id="last-name"
+              label="Last Name"
+              variant="outlined"
+              placeholder="Enter Your Last Name"
+              fullWidth
+              margin="normal"
+              name="lastName"
+            />
+            <TextField
+              id="nick-name"
+              label="Nick Name"
+              variant="outlined"
+              placeholder="Enter Your Nick Name"
+              fullWidth
+              margin="normal"
+              name="nickName"
+            />
+          {/* </ThemeProvider> */}
         </>
       );
     case 1:
       return (
         <>
+          <Typography variant="h6" align="Center">
+            Fill the Acadmic Details
+          </Typography>
+          <br />
+
           <TextField
             id="email"
             label="E-mail"
@@ -88,6 +104,8 @@ function getStepContent(step) {
             fullWidth
             margin="normal"
             name="emailAddress"
+            style={{borderRadius: "30px"}}
+
           />
           <TextField
             id="phone-number"
@@ -112,6 +130,10 @@ function getStepContent(step) {
     case 2:
       return (
         <>
+          <Typography variant="h6" align="Center">
+            Fill the Domain Details
+          </Typography>
+          <br />
           <TextField
             id="address1"
             label="Address 1"
@@ -144,6 +166,10 @@ function getStepContent(step) {
     case 3:
       return (
         <>
+          <Typography variant="h6" align="Center">
+            Last Step
+          </Typography>
+          <br />
           <TextField
             id="cardNumber"
             label="Card Number"
@@ -202,8 +228,8 @@ function StepForm() {
   };
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Stepper alternativeLabel activeStep={activeStep}>
+      <ThemeProvider theme={the}>
+        <Stepper alternativeLabel activeStep={activeStep} color="primary">
           {steps.map((step, index) => {
             const labelProps = {};
             const stepProps = {};
@@ -223,13 +249,16 @@ function StepForm() {
             }
 
             return (
-              <Step {...stepProps} key={index}>
-                <StepLabel {...labelProps}>{step}</StepLabel>
+              <Step {...stepProps} key={index} color="primary">
+                <StepLabel {...labelProps} color="primary">
+                  {step}
+                </StepLabel>
               </Step>
             );
           })}
         </Stepper>
       </ThemeProvider>
+      <div></div>
       {/* <form>
         {getStepContent(activeStep)}
       </form> */}
@@ -239,22 +268,73 @@ function StepForm() {
         </Typography>
       ) : (
         <>
-          <form>{getStepContent(activeStep)}</form>
-          <Button
-            className={classes.button}
-            disabled={activeStep === 0}
-            onClick={handleBack}
+          <br />
+          <Box
+            component="form"
+            // sx={{
+            //   "& .MuiTextField-root": { m: 1, width: "25ch" , marginLeft: "10px"},
+            // }}
+            sx={{
+              // display: 'flex-box',
+              // justifyContent: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              justifyContent: "center",
+              "& .MuiTextField-root": {
+                m: 1,
+                width: "70ch",
+              },
+            }}
+            noValidate
+            autoComplete="off"
+          >          <ThemeProvider theme={the}>
+
+            {getStepContent(activeStep)}
+            </ThemeProvider>
+          </Box>
+
+          <br />
+          <Box
+            sx={{
+              display: "flex-box",
+              alignItems: "center",
+              textAlign: "center",
+              justifyContent: "center",
+              position: "absolute",
+            }}
           >
-            Back
-          </Button>
-          {isStepOptional(activeStep) && (
-            <Button className={classes.button} onClick={handleSkip}>
-              Skip
-            </Button>
-          )}
-          <Button className={classes.button} onClick={handleNext}>
-            {activeStep === steps.length - 1 ? "Finish" : "Next"}
-          </Button>{" "}
+            {" "}
+              <Button
+                className={classes.button}
+                disabled={activeStep === 0}
+                onClick={handleBack}
+              >
+                Back
+              </Button>
+              <ThemeProvider theme={the}>
+
+              {/* {isStepOptional(activeStep) && (
+                <Button
+                  className={classes.button}
+                  color="primary"
+                  onClick={handleSkip}
+                >
+                  Skip
+                </Button>
+              )} */}
+              <Button
+                className={classes.button}
+                onClick={handleNext}
+                color="primary"
+                variant="contained"
+                style={{borderRadius: "30px" , width: "50px"}}
+              >
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              </Button>
+            </ThemeProvider>
+          </Box>
         </>
       )}
     </>
