@@ -1,4 +1,4 @@
-import Login from "./Login";
+import Login from "./login/Login"
 // import Register from "./Register";
 // import { CssBaseline, Container, Paper, Box } from '@mui/material';
 
@@ -13,7 +13,7 @@ function App() {
           <StepForm />
         </Paper>
       </Container> */}
-      <Login />
+<Login />
       {/* <MultiStep /> */}
     </>
   );
